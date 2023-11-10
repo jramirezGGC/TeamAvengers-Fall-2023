@@ -205,7 +205,7 @@ public class TextBasedGame {
     }
     public static void main(String[] args) {
         TextBasedGame game = new TextBasedGame();
-        Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");
+        Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");//added monsters information to monsters.txt - Gland
         Map<String,Puzzle> puzzles = PuzzleReader.readPuzzlesFromFile("puzzles.txt");
         Map<String,Item> items = ItemReader.readItemsFromFile("items.txt");
 //        items.entrySet().forEach(i->{
