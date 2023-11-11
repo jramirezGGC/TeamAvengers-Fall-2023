@@ -1,0 +1,4 @@
+Sword:A Sharp sword:WEAPON:15
+Key:A Rusty Key:CONSUMABLE:0
+Armor:A Shiny metal Bulwark:ARMOR:15
+Potion:A Health potion:CONSUMABLE:50
