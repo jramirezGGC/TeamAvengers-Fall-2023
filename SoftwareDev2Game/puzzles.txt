@@ -1,0 +1,2 @@
+EchoPuzzle:You see a sign that says repeat back This is the answer:say This is the answer:You should repeat back what the puzzle said
+RiddlePuzzle:You see a sign that says I do not fall far from a tree:say Apple:the answer is say Apple
