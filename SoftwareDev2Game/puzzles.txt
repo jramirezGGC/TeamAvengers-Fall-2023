@@ -1,2 +1,7 @@
-EchoPuzzle:You see a sign that says repeat back This is the answer:say This is the answer:You should repeat back what the puzzle said
-RiddlePuzzle:You see a sign that says I do not fall far from a tree:say Apple:the answer is say Apple
+Maze:You've entered a maze! To escape this maze you must enter a single line of directions:say SNEEW:Soon, New Events will Enact in Wonderland
+Trapdoor:Quickly now! A trap door beneath you will no longer hold, jump:say jump:You really have to jump to avoid death
+Decide:There are three chests in this room. You may pick one of these chests or none at all:say chest1:One of these chests can cause damage
+Reverse:Look up:say pu kooL:A mirror can reflect an image but the image is also reveresed
+SeeAndDo:Jump for joy then sprint away:say jump run:Its similar to simons says, except there isn't a simon and its only say
+Echo:To keep moving forward, you must fight:say To keep moving forward, you must fight:Simply repeat word for word
+Random:Turn around: say dnuora nruT:A mirror can reflect an image but the image is also reveresed
