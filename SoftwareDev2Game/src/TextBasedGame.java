@@ -11,8 +11,11 @@ public class TextBasedGame {
 
     public Player generatePlayer(){
         Scanner input = new Scanner(System.in);
+        System.out.println("Welcome to the game! This game is set in a dystopian future where you are fighting for survival.");//Gland added welcome message
         System.out.println("Please enter your name: ");
-        String playerName = input.nextLine();                       //inv               //equiped
+        String playerName = input.nextLine();  
+        System.out.println("Please enter your player description: ");
+        String playerDesc = input.nextLine(); //inv               //equiped
         Player player = new Player(playerName,"Room1",new ArrayList<>(),new ArrayList<>(),100);
         return player;
     }
@@ -24,21 +27,22 @@ public class TextBasedGame {
         while (running) {
             Room room = rooms.get(player.getCurrentRoomName());
             System.out.println("You are in " + room.getName());
-            System.out.println("Your current HP is " + player.getHP());
-            System.out.println("Items in your inventory : " + Item.getInvAsString(player.getInventory())); // logging
-            System.out.println("Items equipped : " + Item.getEquippedAsString(player.getEquipped()));
             System.out.println("Description: " + room.getDescription());
-            System.out.println("Available connections: " + room.getConnections().keySet());// logging
             System.out.println("Room Type: " + room.getRoomType());// logging
+            System.out.println("Available connections: " + room.getConnections().keySet());// logging
             System.out.println("Items in the room : " + Item.getInvAsString(room.getItems())); // logging
             System.out.println("Puzzles in the room : " + Puzzle.getPuzzleAsString(room.getPuzzles())); // logging error with dupe monster
             System.out.println("Monsters in the room : " + Monster.getMonsterAsString(room.getMonsters())); // logging error with dupe monster
+            System.out.println("Your current HP is " + player.getHP());
+            System.out.println("Items in your inventory : " + Item.getInvAsString(player.getInventory())); // logging
+            System.out.println("Items equipped : " + Item.getEquippedAsString(player.getEquipped()));
+            
             System.out.println();
             for (String direction : room.getConnections().keySet()) {
                 System.out.print(direction + " ");
             }
-            System.out.println("Enter the direction you want to go (move : N, S, W, E), 'quit' to exit or : ");
-            System.out.println("For items uses these commands(drop, pickup, inspect : itemName)");
+            System.out.println("Enter the direction you want to go (move : N, S, W, E), 'quit' to exit, or 'help' for a list of commands. ");
+            System.out.println("For items uses these commands(drop, pickup, inspect : itemName):");
             System.out.println();
             String input = scanner.nextLine();
             input = input.toLowerCase();
@@ -98,7 +102,7 @@ public class TextBasedGame {
                         break;
                     }
                     break;
-                case "examine":
+                case "analyze":
                     String[] examineMonster = input.split(" ");
 //                    Monster monsterBeingExamined = room.getMonsters().stream().filter(monster -> examineMonster[1]
 //                            .equals(monster.getName().toLowerCase())).findAny().orElse(null);  CODE FOR MULTIPLES
@@ -107,8 +111,10 @@ public class TextBasedGame {
                         System.out.println(monsterBeingExamined.getDesc());
                     }
                     break;
-                case "explore":
-                    System.out.println(room.getDescription() + " " + room.getItems() + " " + room.getPuzzles());
+                case "scan":
+                   // System.out.println(room.getDescription());
+                    System.out.println(room.getItems());
+                    System.out.println(room.getPuzzles());
                     break;
                 case "say":
                     // need to get puzzles in room (make new method for puzzle)
@@ -117,43 +123,42 @@ public class TextBasedGame {
                         break;
                     }
                     final String userInput = input.trim().toLowerCase();
-                    room.getPuzzles().stream().forEach(puzzle -> {
-                        if(userInput.equals(puzzle.getAns().toLowerCase())){
+                    List<Puzzle> roomPuzzles = room.getPuzzles();
+                    List<String> puzzleSolved = new ArrayList<>();
+                    roomPuzzles.stream().forEach(puzzle -> {
+                        String puzzleAns = puzzle.getAns().toLowerCase();
+                        if(userInput.equals(puzzleAns)){
                             System.out.println("This puzzle has been solved!");
-                            room.getPuzzles().remove(puzzle);
-
+                            puzzleSolved.add(puzzle.getName());
                         }else{
                             System.out.println("You answered wrong :" + userInput);
                         }
                     });
+                    puzzleSolved.stream().forEach(puzzle -> {
+                        room.getPuzzles().removeIf(p -> p.getName().equals(puzzle));
+                    });
                     break;
                 case "inventory":
-                    if(input.equals("inventory")){
                         System.out.println("Items in your backpack : " + Item.getInvAsString(player.getInventory()));
-                    }
                     break;
                 case "equip":
-                    if(input.equals("equip")){
-                        String[] equipmentName = input.split(" "); // extract equipment Name
-                        Item itemBeingEquipped = player.checkIfItemInInventory(equipmentName[1].toLowerCase());
-                        if(player.getInventory().contains(itemBeingEquipped)){
-                            System.out.println("this works");
-                            player.addEquipment(itemBeingEquipped);
-                        }
+                    String[] equipmentName = input.split(" "); // extract equipment Name
+                    Item itemBeingEquipped = player.checkIfItemInInventory(equipmentName[1].toLowerCase());
+                    if(player.getInventory().contains(itemBeingEquipped)){
+                        player.getInventory().remove(itemBeingEquipped);
+                        System.out.println("You equipped the item.");
+                        player.addEquipment(itemBeingEquipped);
                     }
                     break;
-                case "commands":
-                    if(input.equals("commands")){
-                        System.out.println("commands available are : ");
-                        System.out.println("Combat : fight(initiates combat), attack, run, ignore(removes monster)");
-                        System.out.println("Item interaction : pickup, drop, inspect, consume, all of these require the item's associated name");
-                        System.out.println("Navigation : move (N,S,E,W) not case sensitive");
-                        System.out.println("Puzzle interaction : say(only command for now)");
-                    }
+                case "help":
+                        System.out.println("Commands available are : ");
+                        System.out.println("Monster interactions : fight(initiates combat), attack, shield, skill, dodge, analyze, run, ignore[removes monster]");
+                        System.out.println("Item interactions : pickup, drop, inspect, consume [all of these require the item's associated name]");
+                        System.out.println("Navigation : move (N,S,E,W) [not case sensitive]");
+                        System.out.println("Puzzle interactions : say[only command for now]");
                     break;
                 case "fight":
-                    if(input.equals("fight")){
-                        System.out.println("You are now fighting monster");
+                        System.out.println("You are now fighting the monster");
                         Monster monster = room.getMonsters().stream().findFirst().orElse(null);
                         if(monster == null){
                             System.out.println("There are no monsters in this room.");
@@ -170,13 +175,12 @@ public class TextBasedGame {
                         }
                         if(fightOutcome.monsterDefeated){
                             room.removeMonster(monster.getName());
-                        }
                     }
                     break;
                 case "ignore" :
                     String[] monsterName = input.split(" ");
                     if(monsterName.length != 2){
-                        System.out.println("you must type the monsters name");
+                        System.out.println("you must type the monster's name as well");
                         continue;
                     }
                     Monster monsterInRoom = room.checkIfMonsterInRoom(monsterName[1]);
@@ -187,7 +191,7 @@ public class TextBasedGame {
                 case "consume" :
                     String[] consumeName = input.split(" ");
                     if(consumeName.length != 2){
-                        System.out.println("You must type the consumables name");
+                        System.out.println("You must type the consumable's name as well");
                         continue;
                     }
                     Item itemBeingConsumed = player.checkIfItemInInventory(consumeName[1].toLowerCase());
@@ -205,7 +209,7 @@ public class TextBasedGame {
     }
     public static void main(String[] args) {
         TextBasedGame game = new TextBasedGame();
-        Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");//added monsters information to monsters.txt - Gland
+        Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");//Gland added monsters data to monsters.txt
         Map<String,Puzzle> puzzles = PuzzleReader.readPuzzlesFromFile("puzzles.txt");
         Map<String,Item> items = ItemReader.readItemsFromFile("items.txt");
 //        items.entrySet().forEach(i->{
