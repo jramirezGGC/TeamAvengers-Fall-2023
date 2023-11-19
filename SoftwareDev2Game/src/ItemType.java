@@ -1,6 +1,7 @@
 public enum ItemType {
     WEAPON("WEAPON"),
     CONSUMABLE("CONSUMABLE"),
+    FOOD("FOOD"),
     ARMOR("ARMOR");
 
 

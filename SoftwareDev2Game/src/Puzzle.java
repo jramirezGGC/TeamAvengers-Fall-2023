@@ -21,10 +21,10 @@ public class Puzzle {
     public String getAns(){
         return ans;
     }
-
-    public void help(){
-        System.out.println("return puzzle hint");
+    public String getHint(){
+        return hint;
     }
+
 
     public static String getPuzzleAsString(List<Puzzle> puzzles) {
         List<String> puzzleNames = new ArrayList<>();
@@ -43,6 +43,22 @@ public class Puzzle {
             puzzleAns.add(puzzle.getAns());
         });
         return String.join(",",puzzleAns);
+    }
+
+    public static String getPuzzleDesc(List<Puzzle> puzzles){
+        List<String> puzzleDesc = new ArrayList<>();
+        puzzles.stream().forEach(puzzle -> {
+            puzzleDesc.add(puzzle.getDesc());
+        });
+        return String.join(",",puzzleDesc);
+    }
+
+    public static String getPuzzleHint(List<Puzzle> puzzles){
+        List<String> puzzleHint = new ArrayList<>();
+        puzzles.stream().forEach(puzzle ->{
+            puzzleHint.add(puzzle.getHint());
+        });
+        return String.join(",",puzzleHint);
     }
 
     @Override
