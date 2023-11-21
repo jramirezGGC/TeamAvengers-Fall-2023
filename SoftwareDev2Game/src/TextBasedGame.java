@@ -97,7 +97,7 @@ public class TextBasedGame {
                    
                     	
                     } else {
-                        System.out.println("Item is not in inventory");
+                        System.out.println("Item is not in inventory or hand");
                         System.out.println();
                     }
                     break;
@@ -208,7 +208,7 @@ public class TextBasedGame {
                         FightOutcome fightOutcome = FightManager.fight(player,monster);
                         player = fightOutcome.player;
                         if(player.getHP() == 0){
-                            System.out.println("You have lost you are a loser");
+                            System.out.println("You have lost. You are a loser.");
                             running = false;
                             break;
                         }

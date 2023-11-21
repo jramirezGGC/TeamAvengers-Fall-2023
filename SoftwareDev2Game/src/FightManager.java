@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class FightManager{
@@ -64,6 +65,7 @@ public class FightManager{
                            System.out.println("You dodged the attack!");
                            remainingDodgeAttempts--;
                        } else {
+                    	   System.out.println("The monster attacks!");
                            System.out.println("You couldn't dodge, you used all your dodge attempts!");
                            playerHP = player.setHP(player.getHP()- monster.getAtk());
                            System.out.println("Your HP : " + playerHP);
@@ -71,8 +73,20 @@ public class FightManager{
                        break;
 //                   case "skill":
 //                       break;
-//                   case "Shield":
-//                       break;
+                   case "shield":
+                	   String[] shieldName = input.split(" ");
+                	   Item shieldEquipped =  player.checkIfItemEquipped(shieldName[0].toLowerCase());
+                	   if (player.getEquipped().contains(shieldEquipped)) {
+                		   System.out.println("The monster attacks!");
+                               System.out.println("Your shield blocked the attack!");
+                	   }
+                	   else {
+                		   System.out.println("The monster attacks!");
+                		   System.out.println("You don't have a shield equipped!");
+                           playerHP = player.setHP(player.getHP()- monster.getAtk());
+                           System.out.println("Your HP : " + playerHP);
+                	   }
+                       break;
                    default:
                        System.out.println("Are you just gonna let the monster attack you? Fight back! (or run like a coward)");
                        break;
