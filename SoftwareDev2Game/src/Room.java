@@ -110,4 +110,5 @@ class Room {
                 ", puzzles=" + puzzles +
                 '}';
     }
+    // make enum logic here
 }

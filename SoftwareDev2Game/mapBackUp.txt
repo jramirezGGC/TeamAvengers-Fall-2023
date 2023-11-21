@@ -1,0 +1,8 @@
+The first safe room:SAFEROOM:This is the entrance to the barn where the horses are:N=Room2,W=Room6,E=Room7,S=B1:Sharp Sword,Potion:EchoPuzzle:BrawnyHorse
+Room2:HEALROOM:You are in Room2. There is Hay all over the floor:N=Room3,S=The first safe room:Key:BackwardPuzzle:Horse
+Room3:SAFEROOM:Welcome to Room3. There are horses all over the sky they look so real:S=Room2,W=Room4:Armor:null:null
+Room4:SAFEROOM:Welcome to Room4. This is where the horses sleep:E=Room3,S=Room5:null:null:null
+Room5:SAFEROOM:Welcome to Room5. You are surrounded by Plants sculpted into Horses:S=Room6,E=Room2:null:null:null
+Room6:SAFEROOM:Welcome to Room6. A room for horses to eat there is Horse food types A-D:E=The first safe room,N=Room5:null:null:null
+Room7:SAFEROOM:Welcome to Room7. Otherwise, known as the shoe store:W=The first safe room:Keycard:RiddlePuzzle:null
+B1:SAFEROOM:Welcome to B1.:N=The first safe room:null:null:null
