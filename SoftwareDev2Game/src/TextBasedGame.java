@@ -45,7 +45,7 @@ public class TextBasedGame {
             for (String direction : room.getConnections().keySet()) {
                 System.out.print(direction + " ");
             }
-            System.out.println("Enter the direction you want to go (move : N, S, W, E), 'quit' to exit ");
+            System.out.println("Enter the direction you want to go (move : N, S, W, E), 'exit' to exit the game ");
             System.out.println("Use (help) for a list of all commands and applicable actions ");
             System.out.println();
             String input = scanner.nextLine();
@@ -54,9 +54,9 @@ public class TextBasedGame {
             String command = inputParts[0];
             System.out.println();
             switch (command){
-                case "quit":
+                case "exit":
                     running = false;
-                    System.out.println("Coward");
+                    System.out.println("Coward.");
                     break;
                 case "move":
                     String[] movement = input.split(" ");
@@ -212,8 +212,8 @@ public class TextBasedGame {
                     break;
                 case "help":
                         System.out.println("commands available are : ");
-                        System.out.println("Combat : combat(initiates fight), inspect, attack, dodge, run, ignore(removes monster) (TBA:  Skill, Shield)");
-                        System.out.println("Item interaction : grab, discard, analyze, consume, all of these require the item's associated name, and inventory (TBA: select, keep");
+                        System.out.println("Combat : combat(initiates fight), inspect, attack, dodge, shield, run, ignore(removes monster) (TBA:  Skill)");
+                        System.out.println("Item interaction : grab, discard, analyze, consume, all of these require the item's associated name, and inventory (TBA: select)");//keep command is done
                         System.out.println("Navigation : move (N,S,E,W) not case sensitive");
                         System.out.println("Puzzle interaction : say(only command for now), jump(not yet implemented), keep(not yet implemented)");
                         System.out.println("Misc : scan(for all the rooms properties), TBA(Save,Load,Start)");
