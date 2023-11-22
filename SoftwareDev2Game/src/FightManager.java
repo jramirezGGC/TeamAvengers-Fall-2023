@@ -73,7 +73,7 @@ public class FightManager{
                        break;
 //                   case "skill":
 //                       break;
-                   case "shield":
+                   case "shield"://Gland added shield command
                 	   String[] shieldName = input.split(" ");
                 	   Item shieldEquipped =  player.checkIfItemEquipped(shieldName[0].toLowerCase());
                 	   if (player.getEquipped().contains(shieldEquipped)) {
