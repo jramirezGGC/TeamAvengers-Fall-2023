@@ -72,7 +72,7 @@ public class TextBasedGame {
                 case "grab":
                    String[] argumentsPickup = input.split(" "); // Extract the item name
                    Item itemBeingPickedUp = room.pickUpItem(argumentsPickup[1]);
-                   System.out.println("What do you want to do? (Keep or Discard).");//Gland implemented keep and discard commands
+                   System.out.println("What do you want to do? (Keep, Discard, or type Exit to exit the inventory menu).");//Gland implemented keep, discard, and exit commands for grabbing items
                 	 //Item itemBeingPickedUp = player.checkIfItemInInventory(selectName.toLowerCase());
                     if(itemBeingPickedUp != null){
                     //	player.addItem(itemBeingPickedUp);
@@ -83,6 +83,10 @@ public class TextBasedGame {
                         String command2 = input2Parts[0];
                         
                         switch (command2){
+                        	case "exit":
+                        		room.addItemToRoom(itemBeingPickedUp);
+                             	System.out.println("You lef tthe item exited the inventory menu.");
+                        		break;
                             case "keep":
                             	player.addItem(itemBeingPickedUp);
                             	 System.out.println("You kept the item.");
@@ -117,7 +121,7 @@ public class TextBasedGame {
                    
                     	
                     } else {
-                        System.out.println("Item is not in inventory or hand");
+                        System.out.println("Item is not in inventory or hand");//still need to find items in hand
                         System.out.println();
                     }
                     break;
