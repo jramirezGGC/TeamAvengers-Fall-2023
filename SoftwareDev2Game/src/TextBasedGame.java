@@ -69,10 +69,27 @@ public class TextBasedGame {
                 case "grab":
                    String[] argumentsPickup = input.split(" "); // Extract the item name
                    Item itemBeingPickedUp = room.pickUpItem(argumentsPickup[1]);
-                   System.out.println("What do you want to do? (Keep or Discard).");
+                   System.out.println("What do you want to do? (Keep or Discard).");//Gland implemented keep and discard commands
                 	 //Item itemBeingPickedUp = player.checkIfItemInInventory(selectName.toLowerCase());
                     if(itemBeingPickedUp != null){
-                    	player.addItem(itemBeingPickedUp);
+                    //	player.addItem(itemBeingPickedUp);
+                    	
+                    	String input2 = scanner.nextLine();
+                        input2 = input2.toLowerCase();
+                        String[] input2Parts = input2.split(" ");
+                        String command2 = input2Parts[0];
+                        
+                        switch (command2){
+                            case "keep":
+                            	player.addItem(itemBeingPickedUp);
+                            	 System.out.println("You kept the item.");
+                            	 break;
+                            case "discard":
+                            	
+                            	 room.addItemToRoom(itemBeingPickedUp);
+                            	System.out.println("You discarded the item.");
+                            	 break;
+                        }
 //                    	input = scanner.nextLine();
 //                    	 input = input.toLowerCase();
 //                    	if (input == "keep") {
@@ -88,7 +105,7 @@ public class TextBasedGame {
                         System.out.println();
                     }
                     break;
-                case "discard":
+                case "discard"://need to be able to discard from inventory AND hand
                     String[] argumentsDrop = input.split(" "); // Extract the item name
                     Item itemBeingDropped = player.dropItem(argumentsDrop[1]);
                     if (itemBeingDropped != null) {
