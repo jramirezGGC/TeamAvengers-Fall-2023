@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Player {
 	private String name;
+	private String description;
 	private String currentRoomName;
 	private String prevRoomName;
 	private List<Item> inventory;
@@ -14,7 +15,7 @@ public class Player {
 	private List<Item> weapons;
 
 
-	public Player(String name, String currentRoomName, List<Item> inventory,List<Item> equipped, Integer HP, List<Item> selected) { // add DMG
+	public Player(String name, String currentRoomName, List<Item> inventory,List<Item> equipped, Integer HP, List<Item> selected,String description) { // add DMG
 		this.name = name;
 		this.HP = HP;
 		this.currentRoomName = currentRoomName;
@@ -22,12 +23,15 @@ public class Player {
 		this.inventory = inventory;
 		this.equipped = equipped;
 		this.selected = selected;
+		this.description = description;
 	}
 
 	public String getName() {
 		return name;
 	}
-
+	public String getDescription() {
+		return description;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}

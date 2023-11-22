@@ -13,8 +13,10 @@ public class TextBasedGame {
         Scanner input = new Scanner(System.in);
         System.out.println("Welcome to the game! This game is set in a dystopian future where you are fighting for survival.");//Gland added welcome message
         System.out.println("Please enter your name: ");
-        String playerName = input.nextLine();                                           //inv               //equiped
-        Player player = new Player(playerName,"B1/Pantry",new ArrayList<>(),new ArrayList<>(),100,new ArrayList<>());
+        String playerName = input.nextLine();  
+        System.out.println("Please enter a description for yourself: ");//Gland added player description
+        String playerDescription = input.nextLine();//inv               //equiped
+        Player player = new Player(playerName,"B1/Pantry",new ArrayList<>(),new ArrayList<>(),100,new ArrayList<>(),playerDescription);
         return player;
     }
 
@@ -25,6 +27,7 @@ public class TextBasedGame {
         while (running) {
             Room room = rooms.get(player.getCurrentRoomName());
             System.out.println("Your name is : " + player.getName());
+            System.out.println(player.getName()+"'s description : " + player.getDescription());
             System.out.println("HP: " + player.getHP());
             System.out.println("You are in " + room.getName());
             System.out.println("Your current HP is " + player.getHP());
