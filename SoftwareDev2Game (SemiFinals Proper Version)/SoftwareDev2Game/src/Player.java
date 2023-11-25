@@ -56,8 +56,10 @@ public class Player {
         return HP;
     }
     public int setHP(int HP){
-        this.HP = HP;
-        return HP;
+       // this.HP = HP;
+        //return HP;
+        int difference = calculateAndSetHP(HP);
+        return HP - difference;
     }
 
     public String getCurrentRoomName() {
