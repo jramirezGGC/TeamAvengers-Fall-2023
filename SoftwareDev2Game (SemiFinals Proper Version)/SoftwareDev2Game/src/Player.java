@@ -33,6 +33,7 @@ public class Player {
         this.name = name;
     }
 
+    //worked on maxHP
     public void setMaxHP(int maxHP) {
         this.maxHP = maxHP;
     }
