@@ -29,6 +29,7 @@ public class Item { // F2 to rename all instances
     public void inspect(){
         System.out.println(this.desc);
     }
+    
     public static String getInvAsString(List<Item> items){
         List<String> itemsNames = new ArrayList<>();
        items.stream().forEach(item -> {

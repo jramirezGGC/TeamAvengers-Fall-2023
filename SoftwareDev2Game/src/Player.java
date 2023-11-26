@@ -77,14 +77,17 @@ public class Player {
 		Item itemEquipped = checkIfItemEquipped(itemName);
 		if(item == null && itemSelected == null && itemEquipped == null){
 			return null;
-
+		}if (itemEquipped != null){	
+			equipped.remove(itemEquipped);
+			return itemEquipped;
 		}else{
 			inventory.remove(item);
-			selected.remove(item);
-			equipped.remove(item);
+			selected.remove(itemSelected);
+			equipped.remove(itemEquipped);
 			//            inventory.removeIf(i->i.getName().toLowerCase().equals(itemName));
 			return item;
 		}
+		
 		//        if(itemSelected == null){
 		//            return null;
 		//        }else{
