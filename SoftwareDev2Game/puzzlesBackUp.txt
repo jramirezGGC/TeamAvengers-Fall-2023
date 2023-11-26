@@ -1,0 +1,3 @@
+EchoPuzzle:To move forward you will have to repeat this prompt:say To move forward you will have to repeat this prompt:You should repeat back what the puzzle said
+RiddlePuzzle:You see a sign that says I do not fall far from a tree:say Apple:the answer is say Apple
+BackwardPuzzle:You must enter this prompt backwards "Backwards":say sdrawkcab:You should type the answer this backwards

@@ -44,6 +44,13 @@ public class Item { // F2 to rename all instances
         });
         return String.join(", ", equippedNames);
     }
+    public static String getSelectedAsString(List<Item> selected){
+        List<String> selectedNames = new ArrayList<>();
+        selected.stream().forEach(item ->{
+        	selectedNames.add(item.getName());
+        });
+        return String.join(", ", selectedNames);
+    }
     @Override
     public String toString() {
         return "Item{" +

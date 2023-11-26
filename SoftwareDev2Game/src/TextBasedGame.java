@@ -14,9 +14,9 @@ public class TextBasedGame {
         System.out.println("Welcome to the game! This game is set in a dystopian future where you are fighting for survival.");//Gland added welcome message
         System.out.println("Please enter your name: ");
         String playerName = input.nextLine();  
-        System.out.println("Please enter your player description: ");
-        String playerDesc = input.nextLine(); //inv               //equiped
-        Player player = new Player(playerName,"Room1",new ArrayList<>(),new ArrayList<>(),100);
+        System.out.println("Please enter a description for yourself: ");//Gland added player description
+        String playerDescription = input.nextLine();//inv               //equiped
+        Player player = new Player(playerName,"B1/Pantry",new ArrayList<>(),new ArrayList<>(),100,new ArrayList<>(),playerDescription);
         return player;
     }
 
@@ -26,23 +26,27 @@ public class TextBasedGame {
         boolean running = true;
         while (running) {
             Room room = rooms.get(player.getCurrentRoomName());
+            System.out.println("Your name is : " + player.getName());
+            System.out.println(player.getName()+"'s description : " + player.getDescription());
+            System.out.println("HP: " + player.getHP());
             System.out.println("You are in " + room.getName());
-            System.out.println("Description: " + room.getDescription());
-            System.out.println("Room Type: " + room.getRoomType());// logging
-            System.out.println("Available connections: " + room.getConnections().keySet());// logging
-            System.out.println("Items in the room : " + Item.getInvAsString(room.getItems())); // logging
-            System.out.println("Puzzles in the room : " + Puzzle.getPuzzleAsString(room.getPuzzles())); // logging error with dupe monster
-            System.out.println("Monsters in the room : " + Monster.getMonsterAsString(room.getMonsters())); // logging error with dupe monster
             System.out.println("Your current HP is " + player.getHP());
             System.out.println("Items in your inventory : " + Item.getInvAsString(player.getInventory())); // logging
+            System.out.println("Item selected : " + Item.getSelectedAsString(player.getSelected()));
             System.out.println("Items equipped : " + Item.getEquippedAsString(player.getEquipped()));
-            
+            System.out.println(room.getName() +"Description: " + room.getDescription());
+            System.out.println("Available connections: " + room.getConnections().keySet());// logging
+            System.out.println("Room Type: " + room.getRoomType());// logging
+            System.out.println("Items in the room : " + Item.getInvAsString(room.getItems())); // logging
+            System.out.println("Puzzles in the room : " + Puzzle.getPuzzleAsString(room.getPuzzles())); // logging error with dupe monster
+            System.out.println("Puzzle desc : " + Puzzle.getPuzzleDesc(room.getPuzzles()));
+            System.out.println("Monsters in the room : " + Monster.getMonsterAsString(room.getMonsters())); // logging error with dupe monster
             System.out.println();
             for (String direction : room.getConnections().keySet()) {
                 System.out.print(direction + " ");
             }
-            System.out.println("Enter the direction you want to go (move : N, S, W, E), 'quit' to exit, or 'help' for a list of commands. ");
-            System.out.println("For items uses these commands(drop, pickup, inspect : itemName):");
+            System.out.println("Enter the direction you want to go (move : N, S, W, E), 'exit' to exit the game ");
+            System.out.println("Use (help) for a list of all commands and applicable actions ");
             System.out.println();
             String input = scanner.nextLine();
             input = input.toLowerCase();
@@ -50,9 +54,9 @@ public class TextBasedGame {
             String command = inputParts[0];
             System.out.println();
             switch (command){
-                case "quit":
+                case "exit":
                     running = false;
-                    System.out.println("Coward");
+                    System.out.println("Coward.");
                     break;
                 case "move":
                     String[] movement = input.split(" ");
@@ -65,23 +69,59 @@ public class TextBasedGame {
                         System.out.println();
                     }
                     break;
-                case "pickup":
-                    String[] argumentsPickup = input.split(" "); // Extract the item name
-                    Item itemBeingPickedUp = room.pickUpItem(argumentsPickup[1]);
+                case "grab":
+                   String[] argumentsPickup = input.split(" "); // Extract the item name
+                   Item itemBeingPickedUp = room.pickUpItem(argumentsPickup[1]);
+                   System.out.println("What do you want to do? (Keep, Discard, or type Exit to exit the inventory menu).");//Gland implemented keep, discard, and exit commands for grabbing items
+                	 //Item itemBeingPickedUp = player.checkIfItemInInventory(selectName.toLowerCase());
                     if(itemBeingPickedUp != null){
-                        player.addItem(itemBeingPickedUp);
+                    //	player.addItem(itemBeingPickedUp);
+                    	
+                    	String input2 = scanner.nextLine();
+                        input2 = input2.toLowerCase();
+                        String[] input2Parts = input2.split(" ");
+                        String command2 = input2Parts[0];
+                        
+                        switch (command2){
+                        	case "exit":
+                        		room.addItemToRoom(itemBeingPickedUp);
+                             	System.out.println("You lef tthe item exited the inventory menu.");
+                        		break;
+                            case "keep":
+                            	player.addItem(itemBeingPickedUp);
+                            	 System.out.println("You kept the item.");
+                            	 break;
+                            case "discard":
+                            	
+                            	 room.addItemToRoom(itemBeingPickedUp);
+                            	System.out.println("You discarded the item.");
+                            	 break;
+                        }
+//                    	input = scanner.nextLine();
+//                    	 input = input.toLowerCase();
+//                    	if (input == "keep") {
+//    						 player.addItem(itemBeingPickedUp);
+//    						 System.out.println("You kept the item.");
+//    					}
+//    					if (input == "discard")  {
+//    						System.out.println("You discarded the item.");
+//    					}	
+                       
                     }else{
                         System.out.println("Item is not in room");
                         System.out.println();
                     }
                     break;
-                case "drop":
+                case "discard"://need to be able to discard from inventory AND hand
                     String[] argumentsDrop = input.split(" "); // Extract the item name
                     Item itemBeingDropped = player.dropItem(argumentsDrop[1]);
                     if (itemBeingDropped != null) {
+                    	
                         room.addItemToRoom(itemBeingDropped);
+                   
+                    	
                     } else {
-                        System.out.println("Item is not in inventory");
+                        System.out.println("Item is not in inventory or hand");//still need to find items in hand
                         System.out.println();
                     }
                     break;
@@ -108,11 +148,12 @@ public class TextBasedGame {
 //                            .equals(monster.getName().toLowerCase())).findAny().orElse(null);  CODE FOR MULTIPLES
                     Monster monsterBeingExamined = room.getMonsters().stream().findFirst().orElse(null);
                     if(room.getMonsters().contains(monsterBeingExamined)) {
-                        System.out.println(monsterBeingExamined.getDesc());
+                        System.out.println("Monster Desc: " + monsterBeingExamined.getDesc() + "MonsterHP : " + monsterBeingExamined.getHp() + "MonsterDMG : " + monsterBeingExamined.getAtk());
                     }
                     break;
                 case "scan":
-                   // System.out.println(room.getDescription());
+                    System.out.println(room.getDescription() + " " + room.getItems());
+                    System.out.println(room.getMonsters());
                     System.out.println(room.getItems());
                     System.out.println(room.getPuzzles());
                     break;
@@ -138,26 +179,51 @@ public class TextBasedGame {
                         room.getPuzzles().removeIf(p -> p.getName().equals(puzzle));
                     });
                     break;
+                case "hint":
+                    String[] puzzleHint = input.split(" ");
+                    Puzzle hintPuzzle = room.checkIfPuzzleInRoom(puzzleHint[1]);
+                    if(hintPuzzle != null){
+                        System.out.println("Hint : " + hintPuzzle.getHint());
+                    }else{
+                        System.out.println("There is no puzzle of that nature in this room");
+                        break;
+                    }
+                    break;
                 case "inventory":
                         System.out.println("Items in your backpack : " + Item.getInvAsString(player.getInventory()));
+
+                    break;
+                case "select":
+                   // String[] selectName = input.split(" "); // extract equipment Name
+                	System.out.println("Which item would you like to select?" );
+                	Scanner inputSelect = new Scanner(System.in);
+                	String selectName = inputSelect.nextLine(); ;
+                    Item itemBeingSelected = player.checkIfItemInInventory(selectName.toLowerCase()); //[1]
+                    if(player.getInventory().contains(itemBeingSelected)){
+                        player.getInventory().remove(itemBeingSelected);
+                        System.out.println("You have selected " + itemBeingSelected.getName());
+                        player.addSelected(itemBeingSelected);
+                    }
                     break;
                 case "equip":
                     String[] equipmentName = input.split(" "); // extract equipment Name
                     Item itemBeingEquipped = player.checkIfItemInInventory(equipmentName[1].toLowerCase());
                     if(player.getInventory().contains(itemBeingEquipped)){
                         player.getInventory().remove(itemBeingEquipped);
-                        System.out.println("You equipped the item.");
+                        System.out.println("You have equipped " + itemBeingEquipped.getName());
                         player.addEquipment(itemBeingEquipped);
                     }
                     break;
                 case "help":
-                        System.out.println("Commands available are : ");
-                        System.out.println("Monster interactions : fight(initiates combat), attack, shield, skill, dodge, analyze, run, ignore[removes monster]");
-                        System.out.println("Item interactions : pickup, drop, inspect, consume [all of these require the item's associated name]");
-                        System.out.println("Navigation : move (N,S,E,W) [not case sensitive]");
-                        System.out.println("Puzzle interactions : say[only command for now]");
+                        System.out.println("commands available are : ");
+                        System.out.println("Combat : combat(initiates fight), inspect, attack, dodge, shield, run, ignore(removes monster) (TBA:  Skill)");
+                        System.out.println("Item interaction : grab, discard, analyze, consume, all of these require the item's associated name, and inventory (TBA: select)");//keep command is done
+                        System.out.println("Navigation : move (N,S,E,W) not case sensitive");
+                        System.out.println("Puzzle interaction : say(only command for now), jump(not yet implemented), keep(not yet implemented)");
+                        System.out.println("Misc : scan(for all the rooms properties), TBA(Save,Load,Start)");
+                    System.out.println();
                     break;
-                case "fight":
+                case "combat":
                         System.out.println("You are now fighting the monster");
                         Monster monster = room.getMonsters().stream().findFirst().orElse(null);
                         if(monster == null){
@@ -166,7 +232,7 @@ public class TextBasedGame {
                         FightOutcome fightOutcome = FightManager.fight(player,monster);
                         player = fightOutcome.player;
                         if(player.getHP() == 0){
-                            System.out.println("You have lost you are a loser");
+                            System.out.println("You have lost. You are a loser.");
                             running = false;
                             break;
                         }
@@ -180,7 +246,7 @@ public class TextBasedGame {
                 case "ignore" :
                     String[] monsterName = input.split(" ");
                     if(monsterName.length != 2){
-                        System.out.println("you must type the monster's name as well");
+                        System.out.println("you must type the monsters name");
                         continue;
                     }
                     Monster monsterInRoom = room.checkIfMonsterInRoom(monsterName[1]);
@@ -191,13 +257,15 @@ public class TextBasedGame {
                 case "consume" :
                     String[] consumeName = input.split(" ");
                     if(consumeName.length != 2){
-                        System.out.println("You must type the consumable's name as well");
+                        System.out.println("You must type the consumables name");
                         continue;
                     }
-                    Item itemBeingConsumed = player.checkIfItemInInventory(consumeName[1].toLowerCase());
+                    Item itemBeingConsumed = player.checkIfItemInInventory(consumeName[1].toLowerCase());//Gland changed consume command so player can consume items from inventory instead of equipped items
                     if(itemBeingConsumed != null){
                         int playerHP = player.setHP(player.getHP() + itemBeingConsumed.getEffect());
                         player.getInventory().remove(itemBeingConsumed);
+                       //include check for health over 100
+                        System.out.println("You have consumed : " + itemBeingConsumed);
                     }
                     break;
                 default:
@@ -209,7 +277,7 @@ public class TextBasedGame {
     }
     public static void main(String[] args) {
         TextBasedGame game = new TextBasedGame();
-        Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");//Gland added monsters data to monsters.txt
+        Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");//Gland entered monsters data in monsters.txt
         Map<String,Puzzle> puzzles = PuzzleReader.readPuzzlesFromFile("puzzles.txt");
         Map<String,Item> items = ItemReader.readItemsFromFile("items.txt");
 //        items.entrySet().forEach(i->{
