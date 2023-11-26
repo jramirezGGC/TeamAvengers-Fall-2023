@@ -29,7 +29,7 @@ public class TextBasedGame {
             System.out.println("Your current HP is " + player.getMaxHP());
             System.out.println("Items in your inventory : " + Item.getInvAsString(player.getInventory())); // logging
             System.out.println("Items equipped : " + Item.getEquippedAsString(player.getEquipped()));
-            System.out.println(room.getName() +"Description: " + room.getDescription());
+            System.out.println(room.getName() +" Description: " + room.getDescription());
             System.out.println("Available connections: " + room.getConnections().keySet());// logging
             System.out.println("Room Type: " + room.getRoomType());// logging
             System.out.println("Items in the room : " + Item.getInvAsString(room.getItems())); // logging
@@ -40,6 +40,36 @@ public class TextBasedGame {
             for (String direction : room.getConnections().keySet()) {
                 System.out.print(direction + " ");
             }
+
+
+            if ("E1/Survivor Camp".equalsIgnoreCase(room.getName())){
+                System.out.println("Congratulations! You made it to the survivor camp!");
+                System.out.println("Do you want to start over or end the game? (start/end)");
+                String decision = scanner.nextLine().toLowerCase();
+
+                switch (decision) {
+                    case "start":
+
+                        System.out.println("New game started!");
+                        TextBasedGame game = new TextBasedGame();
+                        Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");
+                        Map<String,Puzzle> puzzles = PuzzleReader.readPuzzlesFromFile("puzzles.txt");
+                        Map<String,Item> items = ItemReader.readItemsFromFile("items.txt");
+
+                        Map<String,Room> rooms1 = MapReader.loadMapFromFile("map.txt",items,puzzles,monsters);
+
+                        game.playGame(rooms1);
+                        break;
+                    case "end":
+                        System.out.println("Thanks for playing! Goodbye.");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter 'start' or 'end'.");
+                        break;
+                }
+            }
+
             System.out.println("Enter the direction you want to go (move : N, S, W, E), 'quit' to exit ");
             System.out.println("Use (help) for a list of all commands and applicable actions ");
             System.out.println();
@@ -48,6 +78,7 @@ public class TextBasedGame {
             String[] inputParts = input.split(" ");
             String command = inputParts[0];
             System.out.println();
+
             switch (command){
                 case "quit":
                     running = false;
@@ -229,6 +260,7 @@ public class TextBasedGame {
                     break;
 
             }
+
         }
     }
     public static void main(String[] args) {
