@@ -1,6 +1,7 @@
 public enum ItemType {
     WEAPON("WEAPON"),
     CONSUMABLE("CONSUMABLE"),
+   //worked on 11/25/23
     FOODCONSUMABLE("FOODCONSUMABLE"),
     ARMOR("ARMOR");
 

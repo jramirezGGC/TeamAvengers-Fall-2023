@@ -12,7 +12,7 @@ Cloth rags:A defensive healing item that heals the player for 4 health points:CO
 Shield:A defensive item that increases the player's health by 3 health points. It contained the “shield” command feature which allows the player to block/negate the next attack. It has first priority during combat:ARMOR:3
 Backpack:A utility item that is worn/equippable by the player. It is used to give the player more inventory space to carry extra items:ARMOR:0
 Flashlight:A utility item that is used to see in the dark. It can be used to “scan” hidden items, chests, and puzzles:WEAPON:0
-Apple:A food consumable item when consumed by the player, increases the player’s attack by 2 damage for 2 turns. Can be consumed before combat or during combat (takes a turn):FOODCONSUMABLE:2
+Apple:A food consumable item when consumed by the player, increases the player’s attack by 2 damage for 2 turns. Can be consumed before combat or during combat (takes a turn):CONSUMABLE:2
 RiceCrispy:A food consumable item when consumed by the player, increases the player’s max health by 3 health points for 2 turns. Can be consumed before combat or during combat (takes a turn):FOODCONSUMABLE:3
-CannedGoods:A food consumable item when consumed by the player, increases the player’s attack by 8 damage for 2 turns. Can be consumed before combat or during combat (takes a turn):FOODCONSUMABLE:8
+CannedGoods:A food consumable item when consumed by the player, increases the player’s attack by 8 damage for 2 turns. Can be consumed before combat or during combat (takes a turn):CONSUMABLE:8
 Cereal:A food consumable item when consumed by the player, increases the player’s max health by 10 health for 2 turns. Can be consumed before combat or during combat (takes a turn):FOODCONSUMABLE:10

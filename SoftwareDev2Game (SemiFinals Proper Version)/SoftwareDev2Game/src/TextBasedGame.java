@@ -201,23 +201,33 @@ public class TextBasedGame {
                         room.removeMonster(monsterInRoom.getName());
                     }
                     break;
-                case "consume" :
+                    //worked on 11/25/2023
+                case "consume":
                     String[] consumeName = input.split(" ");
-                    if(consumeName.length != 2){
-                        System.out.println("You must type the consumables name");
+                    if (consumeName.length != 2) {
+                        System.out.println("You must type the consumable's name");
                         continue;
                     }
+
                     Item itemBeingConsumed = player.checkIfItemEquipped(consumeName[1].toLowerCase());
-                    if(itemBeingConsumed != null){
-                        int playerHP = player.setHP(player.getHP() + itemBeingConsumed.getEffect());
-                        player.getEquipped().remove(itemBeingConsumed);
-                        System.out.println("You have consumed : " + itemBeingConsumed);
+                    if (itemBeingConsumed != null) {
+                        if (itemBeingConsumed.getItemType() == ItemType.FOODCONSUMABLE) {
+                            int turns = 2;
+                            int effect = itemBeingConsumed.getEffect();
+
+                            // Apply the effect and allow the player's health to exceed the maximum
+                            player.setMaxHP(player.getMaxHP() + effect);
+                            player.setHP(player.getHP() + effect);
+                            System.out.println("You have consumed : " + itemBeingConsumed.getName());
+                            System.out.println("Your max health is increased by " + effect + " for " + turns + " turns.");
+                        } else {
+                            System.out.println("You can only consume FOODCONSUMABLE items.");
+                        }
+                    } else {
+                        System.out.println("Item not found in your inventory.");
                     }
                     break;
-                default:
-                    System.out.println("Invalid command. Try again.");
-                    System.out.println();
-                    break;
+
             }
         }
     }
