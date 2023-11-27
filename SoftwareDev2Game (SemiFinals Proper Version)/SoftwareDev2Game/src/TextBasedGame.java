@@ -21,7 +21,9 @@ public class TextBasedGame {
         Player player = generatePlayer();
         System.out.println("Hello " + player.getName());
         boolean running = true;
+
         while (running) {
+
             Room room = rooms.get(player.getCurrentRoomName());
             System.out.println("Your name is : " + player.getName());
             System.out.println("HP: " + player.getHP());
@@ -39,8 +41,8 @@ public class TextBasedGame {
             System.out.println();
             for (String direction : room.getConnections().keySet()) {
                 System.out.print(direction + " ");
-            }
 
+            }
 
             if ("E1/Survivor Camp".equalsIgnoreCase(room.getName())){
                 System.out.println("Congratulations! You made it to the survivor camp!");
@@ -68,16 +70,23 @@ public class TextBasedGame {
                         System.out.println("Invalid choice. Please enter 'start' or 'end'.");
                         break;
                 }
+
             }
 
             System.out.println("Enter the direction you want to go (move : N, S, W, E), 'quit' to exit ");
             System.out.println("Use (help) for a list of all commands and applicable actions ");
             System.out.println();
+            if (room.getRoomType() == RoomType.HEALROOM) {
+                System.out.println("Welcome to the Healing Room! You can use the 'heal' command to restore your health to the maximum.");
+            }
             String input = scanner.nextLine();
             input = input.toLowerCase();
             String[] inputParts = input.split(" ");
             String command = inputParts[0];
             System.out.println();
+
+
+
 
             switch (command){
                 //worked on 11/26/2023
