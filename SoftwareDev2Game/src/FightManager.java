@@ -61,11 +61,12 @@ public class FightManager{
                        break;
                    case "dodge"://Gland added dodge command
                 	   System.out.println("The monster attacks!");
+                	  //print monster attack first
                 	   if (remainingDodgeAttempts > 0) {
                            System.out.println("You dodged the attack!");
                            remainingDodgeAttempts--;
                        } else {
-                    	   System.out.println("The monster attacks!");
+                    	  
                            System.out.println("You couldn't dodge, you used all your dodge attempts!");
                            playerHP = player.setHP(player.getHP()- monster.getAtk());
                            System.out.println("Your HP : " + playerHP);
