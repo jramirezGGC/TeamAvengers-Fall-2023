@@ -80,6 +80,15 @@ public class TextBasedGame {
             System.out.println();
 
             switch (command){
+                //worked on 11/26/2023
+                case "heal":
+                    if (room.getRoomType() == RoomType.HEALROOM) {
+                        player.setHP(player.getMaxHP());
+                        System.out.println("You have been healed to full health!");
+                    } else {
+                        System.out.println("You can only use the heal command in a HEALROOM.");
+                    }
+                    break;
                 case "quit":
                     running = false;
                     System.out.println("Coward");
