@@ -76,8 +76,8 @@ public class TextBasedGame {
             System.out.println("Enter the direction you want to go (move : N, S, W, E), 'quit' to exit ");
             System.out.println("Use (help) for a list of all commands and applicable actions ");
             System.out.println();
-            if (room.getRoomType() == RoomType.HEALROOM) {
-                System.out.println("Welcome to the Healing Room! You can use the 'heal' command to restore your health to the maximum.");
+           if (room.getRoomType() == RoomType.HEALROOM) {
+                System.out.println("This is a Healing Room.To use healing station type 'use healingstation'");
             }
             String input = scanner.nextLine();
             input = input.toLowerCase();
@@ -90,14 +90,29 @@ public class TextBasedGame {
 
             switch (command){
                 //worked on 11/26/2023
-                case "heal":
+                case "use":
+                    String[] parts = input.split(" ");
+                    if(parts.length >= 2 && parts[1].equals("healingstation")) {
                     if (room.getRoomType() == RoomType.HEALROOM) {
-                        player.setHP(player.getMaxHP());
-                        System.out.println("You have been healed to full health!");
+                        System.out.println("You are in " + room.getName() + ". You see that there is a healing fountain here");
+                        System.out.println("Do you want to use this healing fountain? (Yes/No)");
+                        String decision = scanner.nextLine().toLowerCase();
+
+                        if (decision.equals("yes")) {
+                            player.setHP(player.getMaxHP());
+                            System.out.println("You have healed to full health!");
+                        } else if (decision.equals("no")) {
+                            System.out.println("You didn't heal from the fountain.");
+                        } else {
+                            System.out.println("Invalid choice. Please enter 'yes' or 'no'.");
+                        }
                     } else {
-                        System.out.println("You can only use the heal command in a HEALROOM.");
+                        System.out.println("You can only use the healingstation command in a HEALROOM.");
+                    }
                     }
                     break;
+
+
                 case "quit":
                     running = false;
                     System.out.println("Coward");
