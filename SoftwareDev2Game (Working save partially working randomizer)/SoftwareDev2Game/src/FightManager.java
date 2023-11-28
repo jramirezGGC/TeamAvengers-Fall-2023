@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class FightManager{
@@ -24,7 +23,7 @@ public class FightManager{
                    continue;
                }
                System.out.println("You are fighting  " + monster.getName() + " it has : " + monster.getHp() + "HP");
-               System.out.println("Commands are attack, dodge, shield, skill, and run");
+               System.out.println("Commands are attack, shield , skill , dodge , run");
                String input = scanner.nextLine();
                input = input.toLowerCase();
                String[] inputParts = input.split(" ");
@@ -59,37 +58,25 @@ public class FightManager{
                        inCombat = false;
                        fightOutcome.ranAway = true;
                        break;
+                   case "shield":
+                       System.out.println("You blocked the attack!");
+                       break;
+                   case "skill":
+                       System.out.println("You used your equipped item's skill!");
+                       break;
                    case "dodge"://Gland added dodge command
-                	   System.out.println("The monster attacks!");
-                	  //print monster attack first
-                	   if (remainingDodgeAttempts > 0) {
+                       System.out.println("The monster attacks!");
+                       if (remainingDodgeAttempts > 0) {
                            System.out.println("You dodged the attack!");
                            remainingDodgeAttempts--;
                        } else {
-                    	  
                            System.out.println("You couldn't dodge, you used all your dodge attempts!");
-                           playerHP = player.setHP(player.getHP()- monster.getAtk());
+                           playerHP = player.setHP(player.getHP() - monster.getAtk());
                            System.out.println("Your HP : " + playerHP);
                        }
                        break;
-//                   case "skill":
-//                       break;
-                   case "shield"://Gland added shield command
-                	   String[] shieldName = input.split(" ");
-                	   Item shieldEquipped =  player.checkIfItemEquipped(shieldName[0].toLowerCase());
-                	   if (player.getEquipped().contains(shieldEquipped)) {
-                		   System.out.println("The monster attacks!");
-                               System.out.println("Your shield blocked the attack!");
-                	   }
-                	   else {
-                		   System.out.println("The monster attacks!");
-                		   System.out.println("You don't have a shield equipped!");
-                           playerHP = player.setHP(player.getHP()- monster.getAtk());
-                           System.out.println("Your HP : " + playerHP);
-                	   }
-                       break;
                    default:
-                       System.out.println("Are you just gonna let the monster attack you? Fight back! (or run like a coward)");
+                       System.out.println("Don't run coward your options are 'fight' 'shield' 'skill' 'dodge' 'analyze' or 'run'(coward)");
                        break;
                }
            }

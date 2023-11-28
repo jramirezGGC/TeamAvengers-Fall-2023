@@ -1,0 +1,8 @@
+Mutated Venus Flytrap:Mutated Plant - Carnivorous plants or sentient flora that have evolved to defend themselves.:4:15
+Worker Drone:Insectoid Swarm - Large hives of insectoid creatures that work together as a hive mind.:2:10
+Queen Bee:Insectoid Swarm - Large hives of insectoid creatures that work together as a hive mind.:10:20
+Zombie Dog:Zombie Dog - Once-faithful companions have been transformed into grotesque and relentless predators by the same virus that ravaged humanity.:5:20
+Slow Walker Zombie:Walker - Typical common slow-moving zombies that roam the apocalyptic land.:4:30
+Mauler Zombie:Mauler - Fast-moving aggressive zombies not only have speed, but agility as well. It can scale obstacles with uncanny ease.:8:50
+Zombie Bear:Zombie Bear - Hulking, undead monstrosity that has fur is tattered and caked with dirt and gore. Its sheer size and strength make it a formidable foe.:15:80
+Crusher Zombie:Crusher - Brute zombie stands tall and built with bulging muscles beneath tattered and blood-soaked clothing, lending an aura of sheer strength to their intimidating presence.:12:60
