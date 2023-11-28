@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +8,18 @@ public class Item { // F2 to rename all instances
     private String desc;
     private int effect;
     private ItemType itemType;
-    public Item(String name, String desc,ItemType itemType, int effect) {
+    private boolean isWeapon;
+    private boolean isStun;
+    private int stunDamage;
+    
+    public Item(String name, String desc,ItemType itemType, int effect, boolean isWeapon, boolean isStun, int stunDamage) {
         this.name = name;
         this.desc = desc;
         this.itemType = itemType;
         this.effect = effect;
+        this.isWeapon = isWeapon;
+        this.isStun = isStun;
+        this.stunDamage = stunDamage;
     }
     public String getName() {
         return name;
@@ -53,4 +61,40 @@ public class Item { // F2 to rename all instances
                 ", itemType=" + itemType +
                 '}';
     }
+	/**
+	 * @return the isWeapon
+	 */
+	public boolean isWeapon() {
+		return isWeapon;
+	}
+	/**
+	 * @param isWeapon the isWeapon to set
+	 */
+	public void setWeapon(boolean isWeapon) {
+		this.isWeapon = isWeapon;
+	}
+	/**
+	 * @return the isStun
+	 */
+	public boolean isStun() {
+		return isStun;
+	}
+	/**
+	 * @param isStun the isStun to set
+	 */
+	public void setStun(boolean isStun) {
+		this.isStun = isStun;
+	}
+	/**
+	 * @return the stunDamage
+	 */
+	public int getStunDamage() {
+		return stunDamage;
+	}
+	/**
+	 * @param stunDamage the stunDamage to set
+	 */
+	public void setStunDamage(int stunDamage) {
+		this.stunDamage = stunDamage;
+	}
 }

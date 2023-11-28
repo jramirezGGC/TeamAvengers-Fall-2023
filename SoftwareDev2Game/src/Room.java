@@ -79,6 +79,12 @@ class Room {
 
     public void addItemToRoom(Item item){
         items.add(item);
+       
+    }
+    public void addDefenseItemToRoom(Item itemEquipped){
+       
+        items.add(itemEquipped);
+       // items.add(itemSelected);
     }
 
     public String getConnectedRoomName(String direction){

@@ -1,4 +1,4 @@
-import java.util.Comparator;
+
 import java.util.List;
 
 public class Player {
@@ -7,9 +7,12 @@ public class Player {
     private String prevRoomName;
     private List<Item> inventory;
     private int HP;
+    private boolean handgunSkillUsed;
+    private boolean armorFortified = false;
+    private int fortifiedTurns = 0;
 
-    private int maxHp;
-    private int DMG;
+    //private int maxHp;
+    //private int DMG;
 
     private List<Item> weapons;
     private List<Item> equipped;
@@ -33,6 +36,7 @@ public class Player {
         this.name = name;
     }
 
+    //worked on maxHP
     public void setMaxHP(int maxHP) {
         this.maxHP = maxHP;
     }
@@ -115,7 +119,7 @@ public class Player {
 //    }
 
 public Item getWeapon(){
-        return equipped.stream().filter(w->w.getItemType().equals(ItemType.WEAPON)).findFirst().orElse(null);
+        return equipped.stream().filter(Item::isWeapon).findFirst().orElse(null);
 }
     public void addItem(Item item){
         inventory.add(item);
@@ -134,4 +138,64 @@ public Item getWeapon(){
     public void setEquipped(List<Item> equipped) {
         this.equipped = equipped;
     }
+
+	/**
+	 * @return the weapons
+	 */
+	public List<Item> getWeapons() {
+		return weapons;
+	}
+
+	/**
+	 * @param weapons the weapons to set
+	 */
+	public void setWeapons(List<Item> weapons) {
+		this.weapons = weapons;
+	}
+
+	/**
+	 * @return the handgunSkillUsed
+	 */
+	public boolean isHandgunSkillUsed() {
+		return handgunSkillUsed;
+	}
+
+	/**
+	 * @param handgunSkillUsed the handgunSkillUsed to set
+	 */
+	public void setHandgunSkillUsed(boolean handgunSkillUsed) {
+		this.handgunSkillUsed = handgunSkillUsed;
+	}
+
+	/**
+	 * @return the armorFortified
+	 */
+	public boolean isArmorFortified() {
+		return armorFortified;
+	}
+
+	/**
+	 * @param armorFortified the armorFortified to set
+	 */
+	public void setArmorFortified(boolean armorFortified) {
+		this.armorFortified = armorFortified;
+	}
+
+	/**
+	 * @return the fortifiedTurns
+	 */
+	public int getFortifiedTurns() {
+		return fortifiedTurns;
+	}
+
+	/**
+	 * @param fortifiedTurns the fortifiedTurns to set
+	 */
+	public void setFortifiedTurns(int fortifiedTurns) {
+		this.fortifiedTurns = fortifiedTurns;
+	}
+
+	/**
+	 * @return the shieldUsed
+	 */
 }

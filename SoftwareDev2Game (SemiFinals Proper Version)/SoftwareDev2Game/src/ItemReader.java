@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 
@@ -12,7 +13,10 @@ public class ItemReader {
                 String itemDesc = parts[1];
                 ItemType itemType = ItemType.valueOf(parts[2].trim());
                 int itemEffect = Integer.parseInt(parts[3].trim());
-                Item item = new Item(itemName,itemDesc,itemType,itemEffect);
+                boolean isWeapon = Boolean.parseBoolean(parts[4].trim());
+                boolean isStun = Boolean.parseBoolean(parts[5].trim());
+                int stunDamage = Integer.parseInt(parts[6].trim());
+                Item item = new Item(itemName,itemDesc,itemType,itemEffect,isWeapon,isStun,stunDamage);
                 items.put(itemName,item);
             }
         } catch (IOException e) {
