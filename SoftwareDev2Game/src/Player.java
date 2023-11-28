@@ -10,12 +10,13 @@ public class Player {
 	private List<Item> equipped;
 	private List<Item> selected;
 	private int HP;
+	private int checkHP;
 	private int DMG;
 
 	private List<Item> weapons;
 
 
-	public Player(String name, String currentRoomName, List<Item> inventory,List<Item> equipped, Integer HP, List<Item> selected,String description) { // add DMG
+	public Player(String name, String currentRoomName, List<Item> inventory,List<Item> equipped, Integer HP, List<Item> selected,String description, Integer checkHP) { // add DMG
 		this.name = name;
 		this.HP = HP;
 		this.currentRoomName = currentRoomName;
@@ -24,6 +25,7 @@ public class Player {
 		this.equipped = equipped;
 		this.selected = selected;
 		this.description = description;
+		this.checkHP = checkHP;
 	}
 
 	public String getName() {
@@ -35,7 +37,13 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	public int getcheckHP(){
+		return checkHP;
+	}
+	public int setcheckHP(int checkHP){
+		this.checkHP = checkHP;
+		return checkHP;
+	}
 	public int getHP(){
 		return HP;
 	}
