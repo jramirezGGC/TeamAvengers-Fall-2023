@@ -1,0 +1,2 @@
+BrawnyHorse:There is a Brawny Horse infront of you:20:100
+Horse:The horse:15:100

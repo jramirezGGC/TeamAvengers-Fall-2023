@@ -16,7 +16,7 @@ public class TextBasedGame {
 		String playerName = input.nextLine();  
 		System.out.println("Please enter a description for yourself: ");//Gland added player description
 		String playerDescription = input.nextLine();//inv               //equiped
-		Player player = new Player(playerName,"B1/Pantry",new ArrayList<>(),new ArrayList<>(),100,new ArrayList<>(),playerDescription);
+		Player player = new Player(playerName,"B1/Pantry",new ArrayList<>(),new ArrayList<>(),100,new ArrayList<>(),playerDescription,100);
 		return player;
 	}
 
@@ -63,7 +63,7 @@ public class TextBasedGame {
 				String[] movement = input.split(" ");
 				String roomName = room.getConnectedRoomName(movement[1]);
 				System.out.println(roomName);
-				if(roomName != null){
+				if(roomName != null && movement != null){
 					player.moveToRoom(roomName);
 				}else {
 					System.out.println("You can't go that way.");
@@ -97,6 +97,9 @@ public class TextBasedGame {
 						room.addItemToRoom(itemBeingPickedUp);
 						System.out.println("You discarded the item.");
 						break;
+					default:
+						System.out.println("Invalid command.");
+						room.addItemToRoom(itemBeingPickedUp);
 					}
 					//                    	input = scanner.nextLine();
 					//                    	 input = input.toLowerCase();
@@ -118,13 +121,25 @@ public class TextBasedGame {
 				Item itemBeingDropped = player.dropItem(argumentsDrop[1]);
 				if (argumentsDrop[1].equalsIgnoreCase("helmet")) {//Gland implemented health decrease for discarding an equipped helmet
 						player.setHP(player.getHP()- 7);
+						if (player.getcheckHP() > 100) {
+							player.setcheckHP(100);
+							player.setHP(player.getHP()+7);
+						}
 						System.out.println("Item has been discarded.");
 						room.addItemToRoom(itemBeingDropped);
 					}else if (argumentsDrop[1].equalsIgnoreCase("armorvest")) {//Gland implemented health decrease for discarding an equipped ArmorVest
 					player.setHP(player.getHP()- 15);
+					if (player.getcheckHP() > 100) {
+						player.setcheckHP(100);
+						player.setHP(player.getHP()+15);
+					}
 					room.addItemToRoom(itemBeingDropped);
 				}else if (argumentsDrop[1].equalsIgnoreCase("shield")) {//Gland implemented health decrease for discarding an equipped shield
 					player.setHP(player.getHP()- 3);
+					if (player.getcheckHP() > 100) {
+						player.setcheckHP(100);
+						player.setHP(player.getHP()+3);
+					}
 					System.out.println("Item has been discarded.");
 					room.addItemToRoom(itemBeingDropped);
 				}else if (itemBeingDropped != null) {
@@ -218,11 +233,17 @@ public class TextBasedGame {
 			case "equip":
 				String[] equipmentName = input.split(" "); // extract equipment Name
 				Item itemBeingEquipped = player.checkIfItemInInventory(equipmentName[1].toLowerCase());
+				
 				if (input.equalsIgnoreCase("equip helmet")) {//Gland added health for equipping helmet
 					Item helmetToEquip = player.checkIfItemInInventory("helmet");
 					if (player.getInventory().contains(helmetToEquip)) {
 						player.getInventory().remove(helmetToEquip);
 						player.setHP(player.getHP()+ 7);
+						if (player.getHP() > 100) {
+							player.setcheckHP(107);
+							player.setHP(100);
+						}
+						
 						System.out.println("You have equipped Helmet.");
 						player.addEquipment(helmetToEquip);
 					}
@@ -232,6 +253,10 @@ public class TextBasedGame {
 					if (player.getInventory().contains(armorVestToEquip)) {
 						player.getInventory().remove(armorVestToEquip);
 						player.setHP(player.getHP()+ 15);
+						if (player.getHP() > 100) {
+							player.setcheckHP(115);
+							player.setHP(100);
+						}
 						System.out.println("You have equipped ArmorVest.");
 						player.addEquipment(armorVestToEquip);
 					}
@@ -240,6 +265,10 @@ public class TextBasedGame {
 					if (player.getInventory().contains(shieldToEquip)) {
 						player.getInventory().remove(shieldToEquip);
 						player.setHP(player.getHP()+ 3);
+						if (player.getHP() > 100) {
+							player.setcheckHP(103);
+							player.setHP(100);
+						}
 						System.out.println("You have equipped Shield.");
 						player.addEquipment(shieldToEquip);
 					}

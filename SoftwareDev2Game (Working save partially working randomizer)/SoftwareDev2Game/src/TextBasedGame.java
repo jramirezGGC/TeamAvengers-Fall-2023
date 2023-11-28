@@ -1,7 +1,13 @@
+
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
-public class TextBasedGame {
+public class TextBasedGame{
 
     private Scanner scanner;
 
@@ -21,122 +27,34 @@ public class TextBasedGame {
         Player player = generatePlayer();
         System.out.println("Hello " + player.getName());
         boolean running = true;
-
         while (running) {
-
             Room room = rooms.get(player.getCurrentRoomName());
-            System.out.println("Your name is : " + player.getName());
-            System.out.println("HP: " + player.getHP());
-            System.out.println("You are in " + room.getName());
-            System.out.println("Your current HP is " + player.getMaxHP());
-            System.out.println("Items in your inventory : " + Item.getInvAsString(player.getInventory())); // logging
-            System.out.println("Items equipped : " + Item.getEquippedAsString(player.getEquipped()));
-            System.out.println(room.getName() +" Description: " + room.getDescription());
-            System.out.println("Available connections: " + room.getConnections().keySet());// logging
-            System.out.println("Room Type: " + room.getRoomType());// logging
-            System.out.println("Items in the room : " + Item.getInvAsString(room.getItems())); // logging
-            System.out.println("Puzzles in the room : " + Puzzle.getPuzzleAsString(room.getPuzzles())); // logging error with dupe monster
-            System.out.println("Puzzle desc : " + Puzzle.getPuzzleDesc(room.getPuzzles()));
-            System.out.println("Monsters in the room : " + Monster.getMonsterAsString(room.getMonsters())); // logging error with dupe monster
+            System.out.println("Your name is : " + player.getName()); // Player name tracked
+            System.out.println("HP: " + player.getHP()); // player HP
+            System.out.println("Items in your inventory : " + Item.getInvAsString(player.getInventory())); // logging items in inventory
+            System.out.println("Items equipped : " + Item.getEquippedAsString(player.getEquipped())); // logging items equipped
+            System.out.println("You are in " + room.getName()); // logging current location
+            System.out.println(room.getName() +"Description: " + room.getDescription()); // logging room desc & name
+            System.out.println("Room Type: " + room.getRoomType());// logging room type
+            System.out.println("Available connections: " + room.getConnections().keySet());// logging avalible connections
+            System.out.println("Items in the room : " + Item.getInvAsString(room.getItems())); // logging items in room
+            System.out.println("Puzzles in the room : " + Puzzle.getPuzzleAsString(room.getPuzzles())); // logging puzzles in room
+            System.out.println("Puzzle desc : " + Puzzle.getPuzzleDesc(room.getPuzzles())); // logging puzzles in room
+            System.out.println("Monsters in the room : " + Monster.getMonsterAsString(room.getMonsters())); // logging monsters in room
             System.out.println();
             for (String direction : room.getConnections().keySet()) {
                 System.out.print(direction + " ");
-
             }
-
-            if ("E1/Survivor Camp".equalsIgnoreCase(room.getName())){
-                System.out.println("Congratulations! You made it to the survivor camp!");
-                System.out.println("Do you want to start over or end the game? (start/end)");
-                String decision = scanner.nextLine().toLowerCase();
-
-                switch (decision) {
-                    case "start":
-
-                        System.out.println("New game started!");
-                        TextBasedGame game = new TextBasedGame();
-                        Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");
-                        Map<String,Puzzle> puzzles = PuzzleReader.readPuzzlesFromFile("puzzles.txt");
-                        Map<String,Item> items = ItemReader.readItemsFromFile("items.txt");
-
-                        Map<String,Room> rooms1 = MapReader.loadMapFromFile("map.txt",items,puzzles,monsters);
-
-                        game.playGame(rooms1);
-                        break;
-                    case "end":
-                        System.out.println("Thanks for playing! Goodbye.");
-                        System.exit(0);
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please enter 'start' or 'end'.");
-                        break;
-                }
-
-            }
-            // Inside the playGame method, after the room description is displayed
-
-
             System.out.println("Enter the direction you want to go (move : N, S, W, E), 'quit' to exit ");
             System.out.println("Use (help) for a list of all commands and applicable actions ");
             System.out.println();
-           if (room.getRoomType() == RoomType.HEALROOM) {
-                System.out.println("This is a Healing Room.To use healing station type 'use healingstation'");
-            }
             String input = scanner.nextLine();
             input = input.toLowerCase();
             String[] inputParts = input.split(" ");
             String command = inputParts[0];
+            Map<String, String> gameStatus = null;
             System.out.println();
-
-
-
-
             switch (command){
-                //worked on 11/26/2023
-                case "use":
-                    String[] parts = input.split(" ");
-                    if(parts.length >= 2 && parts[1].equals("healingstation")) {
-                    if (room.getRoomType() == RoomType.HEALROOM) {
-                        System.out.println("You are in " + room.getName() + ". You see that there is a healing fountain here");
-                        System.out.println("Do you want to use this healing fountain? (Yes/No)");
-                        String decision = scanner.nextLine().toLowerCase();
-
-                        if (decision.equals("yes")) {
-                            player.setHP(player.getMaxHP());
-                            System.out.println("You have healed to full health!");
-                        } else if (decision.equals("no")) {
-                            System.out.println("You didn't heal from the fountain.");
-                        } else {
-                            System.out.println("Invalid choice. Please enter 'yes' or 'no'.");
-                        }
-                    } else {
-                        System.out.println("You can only use the healingstation command in a HEALROOM.");
-                    }
-                    }
-                    break;
-                case "jump":
-                     if(!room.getName().equals("B3/Greenhouse")){
-                    System.out.println("You jumped in the air");
-                     }
-                    if (room.getName().equals("B3/Greenhouse")) {
-                        Puzzle seeAndDoPuzzle = room.checkIfPuzzleInRoom("SeeAndDo");
-                        if (seeAndDoPuzzle != null) {
-                            System.out.println(seeAndDoPuzzle.getDesc());
-                            String playerResponse = scanner.nextLine().toLowerCase();
-                            if (playerResponse.equals(seeAndDoPuzzle.getAns())) {
-                                System.out.println("You jumped for joy then sprinted away! You can now move forward.");
-                            }
-                            else if(playerResponse.equals("hint")){
-                                System.out.println(seeAndDoPuzzle.getHint());
-                            }
-                            else {
-                                System.out.println("Incorrect response. Try again.");
-                                player.getPrevRoomName();
-                            }
-                        }
-                    }
-                    break;
-
-
                 case "quit":
                     running = false;
                     System.out.println("Coward");
@@ -199,7 +117,6 @@ public class TextBasedGame {
                     }
                     break;
                 case "scan":
-                    System.out.println(room.getDescription() + " " + room.getItems());
                     System.out.println(room.getMonsters());
                     System.out.println(room.getItems());
                     System.out.println(room.getPuzzles());
@@ -289,49 +206,93 @@ public class TextBasedGame {
                         room.removeMonster(monsterInRoom.getName());
                     }
                     break;
-                    //worked on 11/25/2023
-                case "consume":
+                case "consume" :
                     String[] consumeName = input.split(" ");
-                    if (consumeName.length != 2) {
-                        System.out.println("You must type the consumable's name");
+                    if(consumeName.length != 2){
+                        System.out.println("You must type the consumables name");
                         continue;
                     }
-
                     Item itemBeingConsumed = player.checkIfItemEquipped(consumeName[1].toLowerCase());
-                    if (itemBeingConsumed != null) {
-                        if (itemBeingConsumed.getItemType() == ItemType.FOODCONSUMABLE) {
-                            int turns = 2;
-                            int effect = itemBeingConsumed.getEffect();
-
-                            // Apply the effect and allow the player's health to exceed the maximum
-                            player.setMaxHP(player.getMaxHP() + effect);
-                            player.setHP(player.getHP() + effect);
-                            System.out.println("You have consumed : " + itemBeingConsumed.getName());
-                            System.out.println("Your max health is increased by " + effect + " for " + turns + " turns.");
-                        } else {
-                            System.out.println("You can only consume FOODCONSUMABLE items.");
-                        }
-                    } else {
-                        System.out.println("Item not found in your inventory.");
+                    if(itemBeingConsumed != null){
+                        int playerHP = player.setHP(player.getHP() + itemBeingConsumed.getEffect());
+                        player.getEquipped().remove(itemBeingConsumed);
+                        System.out.println("You have consumed : " + itemBeingConsumed);
                     }
                     break;
-
+                case "save":
+//                    MapReader.saveGameToFile(rooms,"saved_game.txt");
+//                    System.out.println("Game has been saved");
+                    saveGame(player,rooms);
+//                    player.savePlayerSession("playerData.txt");
+                    System.out.println("Saved game");
+                    break;
+                case "load":
+//                    rooms = MapReader.loadGameFromFile("saved_game.txt");
+//                    rooms = loadGame(); working version is this line
+                    LoadedGameData loadedGameData = loadGame();
+                    if (loadedGameData != null) {
+                        player = loadedGameData.getLoadedPlayer();
+                        rooms = loadedGameData.getLoadedRooms();
+                    }
+                    System.out.println("Game loaded successfully");
+                    break;
+                default:
+                    System.out.println("Invalid command. Try again.");
+                    System.out.println();
+                    break;
             }
-
         }
     }
+    public void saveGame(Player player, Map<String, Room> rooms) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("saved_game1.txt"))) {
+            oos.writeObject(player);
+            oos.writeObject(rooms);
+            System.out.println("Game saved successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error saving game: " + e.getMessage());
+        }
+    }
+
+//    public Map<String, Room> loadGame() {
+//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("saved_game1.txt"))) {
+//            return (Map<String, Room>) ois.readObject();
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//            System.err.println("Error loading game: " + e.getMessage());
+//        }
+//        return null;
+//    }
+
+    private LoadedGameData loadGame() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("saved_game1.txt"))) {
+            // Load player data
+            Player loadedPlayer = (Player) ois.readObject();
+            // Load rooms map
+            Map<String, Room> loadedRooms = (Map<String, Room>) ois.readObject();
+            System.out.println("Game loaded successfully!");
+            // Return a custom object containing both the player and rooms
+            return new LoadedGameData(loadedPlayer, loadedRooms);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.err.println("Error loading game: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+
     public static void main(String[] args) {
         TextBasedGame game = new TextBasedGame();
         Map<String,Monster> monsters = MonsterReader.readMonstersFromFile("monsters.txt");
         Map<String,Puzzle> puzzles = PuzzleReader.readPuzzlesFromFile("puzzles.txt");
         Map<String,Item> items = ItemReader.readItemsFromFile("items.txt");
-//        items.entrySet().forEach(i->{
-//            System.out.println("This item is  " + i.getKey());
-//        });
         Map<String,Room> rooms = MapReader.loadMapFromFile("map.txt",items,puzzles,monsters);
-//        rooms.entrySet().forEach(r->{
-//            System.out.println("This Room is  " + r.getValue());
-//        });
+
+//        MapReader.saveGameToFile(rooms,"saved_game.txt");
+//        Map<String, Room> loadedRooms = MapReader.loadGameFromFile("saved_game.txt", items, puzzles, monsters);
+//        game.playGame(loadedRooms);
+
         game.playGame(rooms);
     }
 }

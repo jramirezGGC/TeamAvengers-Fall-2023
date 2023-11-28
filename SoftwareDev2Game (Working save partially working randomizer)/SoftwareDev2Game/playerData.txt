@@ -1,0 +1,5 @@
+e, B1/Pantry, 100
+Inventory :
+Item{name='CannedGoods', desc='A food consumable item when consumed by the player, increases the player’s attack by 8 damage for 2 turns. Can be consumed before combat or during combat (takes a turn)', effect=8, itemType=CONSUMABLE}
+Equipment :
+Item{name='Crowbar', desc='A melee weapon that is used in combat. It deals 14 damage to the foe, it has no skills but deals an additional 4 damage if the foe has less than 30%', effect=14, itemType=WEAPON}
